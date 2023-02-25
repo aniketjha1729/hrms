@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { JwtGuard } from 'src/auth/guards/auth-guard';
 import { CreateUserRequest } from '../dto/create-user.request';
 import { LoginUserRequest } from '../dto/login-user-request';
 import { UserResponse } from '../dto/user.response';
@@ -18,5 +19,11 @@ export class UsersController {
   @Post('signin')
   async signIn(@Body() loginUserRequest: LoginUserRequest): Promise<string> {
     return this.userService.signInUser(loginUserRequest);
+  }
+
+  @UseGuards(JwtGuard)
+  @Get('ok')
+  async checkAuth(): Promise<string> {
+    return 'dfd';
   }
 }
