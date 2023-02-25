@@ -1,5 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { CreateUserRequest } from '../dto/create-user.request';
+import { LoginUserRequest } from '../dto/login-user-request';
 import { UserResponse } from '../dto/user.response';
 import { UserService } from '../services/user.service';
 
@@ -14,8 +15,8 @@ export class UsersController {
     return this.userService.createUser(createUserRequest);
   }
 
-  // @Post('signin')
-  // async signIn(@Body() createUserRequest: CreateUserRequest): Promise<any> {
-  //   return this.userService.signInUser(createUserRequest);
-  // }
+  @Post('signin')
+  async signIn(@Body() loginUserRequest: LoginUserRequest): Promise<string> {
+    return this.userService.signInUser(loginUserRequest);
+  }
 }
