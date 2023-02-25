@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/guards/auth-guard';
 import { CreateUserRequest } from '../dto/create-user.request';
 import { LoginUserRequest } from '../dto/login-user-request';
@@ -23,6 +24,7 @@ export class UsersController {
 
   @UseGuards(JwtGuard)
   @Get('ok')
+  @ApiBearerAuth('JWT-auth')
   async checkAuth(): Promise<string> {
     return 'dfd';
   }
