@@ -51,6 +51,11 @@ export class UserService {
     return this.buildResponse(user);
   }
 
+  async getProfile(userId: string): Promise<any> {
+    const user = await this.userRepository.findOneById(userId);
+    return user;
+  }
+
   private async validateCreateUserRequest(
     createUserRequest: CreateUserRequest,
   ): Promise<void> {

@@ -1,6 +1,14 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/guards/auth-guard';
+import { RoleGuard } from 'src/auth/guards/role-guard';
 import { CreateUserRequest } from '../dto/create-user.request';
 import { LoginUserRequest } from '../dto/login-user-request';
 import { UserResponse } from '../dto/user.response';
@@ -23,9 +31,16 @@ export class UsersController {
   }
 
   @UseGuards(JwtGuard)
-  @Get('ok')
+  @Get('profile')
   @ApiBearerAuth('JWT-auth')
-  async checkAuth(): Promise<string> {
-    return 'dfd';
+  async checkAuth(@Request() req): Promise<any> {
+    return this.userService.getProfile(req.user.id);
+  }
+
+  @UseGuards(JwtGuard, RoleGuard)
+  @Get('test')
+  @ApiBearerAuth('JWT-auth')
+  async checkAutha(): Promise<string> {
+    return 'hello';
   }
 }

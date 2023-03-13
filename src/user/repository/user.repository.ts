@@ -24,6 +24,6 @@ export class UserRepository {
   }
 
   async findOneById(userId: string): Promise<User> {
-    return this.user.findById(userId);
+    return this.user.findById(userId).select('-password');
   }
 }
